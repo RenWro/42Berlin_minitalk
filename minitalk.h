@@ -19,6 +19,6 @@
 # include <stdio.h>
 # include "libft/libft.h"
 
-# define BUFFER 70000
+# define BUFFER 90000
 
 #endif
