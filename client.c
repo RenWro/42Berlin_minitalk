@@ -25,7 +25,6 @@
  *library (`sys/types.h`) that represents a process identifier (Process ID or 
  * simply PID). 
  * It is used to store values that identify processes in the operating system.
- *
  * It is a signed integer type, usually represented as `int`, but the exact 
  *  implementation may vary between operating systems.
  * It is used to identify processes in system calls such as `fork()`, `kill()`, 
