@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rwrobles <rwrobles@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: rwrobles <rwrobles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:11:47 by rwrobles          #+#    #+#             */
-/*   Updated: 2025/02/28 16:11:49 by rwrobles         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:21:26 by rwrobles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
  *library (`sys/types.h`) that represents a process identifier (Process ID or 
  * simply PID). 
  * It is used to store values that identify processes in the operating system.
+ *
  * It is a signed integer type, usually represented as `int`, but the exact 
  *  implementation may vary between operating systems.
  * It is used to identify processes in system calls such as `fork()`, `kill()`, 
@@ -63,11 +64,10 @@ void	send_message_to_server(pid_t server_pid, const char *message)
 		}
 		message++;
 	}
-
 	bit_position = 7;
 	while (bit_position >= 0)
 	{
-		send_bit_to_server(server_pid, 0);  
+		send_bit_to_server(server_pid, 0);
 		bit_position--;
 	}
 }
@@ -87,11 +87,8 @@ int	main(int argc, char **argv)
 		ft_putendl_fd("Usage: <server PID> <message>", 1);
 		exit(1);
 	}
-
 	server_pid = ft_atoi(argv[1]);
 	message = argv[2];
-
 	send_message_to_server(server_pid, message);
-
 	return (0);
 }
