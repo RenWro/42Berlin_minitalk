@@ -12,11 +12,13 @@
 
 #ifndef MINITALK_H
 # define MINITALK_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
+
 # include <signal.h>
-# include "libft.h"
-# include "ft_printf.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include "libft/libft.h"
+
+# define BUFFER 70000
 
 #endif
