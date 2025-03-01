@@ -21,3 +21,12 @@ Messages are sent asynchronously through **Unix signals** (`SIGUSR1` and `SIGUSR
 - **Binary message encoding**: The client must encode the message to be sent to the server and send the bits via signals. The server, in turn, must decode these signals to reconstruct the original message.
   
 - **Handling asynchronous signals**: Since the system uses asynchronous signals, the server must be able to handle these signals while performing other tasks.
+
+- ### About pid_t (Process ID Type)
+
+The `pid_t` (Process ID Type) is a data type defined in the POSIX standard library (`sys/types.h`) that represents a process identifier (Process ID or simply PID).  
+It is used to store values that identify processes in the operating system.
+
+- It is a signed integer type, usually represented as `int`, but the exact implementation may vary between operating systems.
+- It is used to identify processes in system calls such as `fork()`, `kill()`, `wait()`, and `getpid()`.
+
