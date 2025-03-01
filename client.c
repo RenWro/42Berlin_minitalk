@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <sys/types.h> 
 
 /* 
  * Global variable to track server acknowledgment.
@@ -30,10 +29,9 @@ void	signal_reception(int signal)
 /* 
  * Function to send a single bit to the server via a signal.
  * It sends SIGUSR1 if the bit is 1 and SIGUSR2 if the bit is 0.
- * The function uses a small delay (usleep) to allow the server to 
- * process the signal.
+ * The function uses a small delay (usleep) and waits for confirmation
+ * from the server before continuing.
  */
-
 void	send_bit_to_server(pid_t server_pid, int bit_value)
 {
 	if (bit_value == 1)
@@ -48,30 +46,33 @@ void	send_bit_to_server(pid_t server_pid, int bit_value)
 
 /* 
  * Function to send the entire message to the server.
- * It sends the message character by character, converting each character to 
- * its binary representation. After sending the message, it sends a final 8 
- * bits (all 0s) to mark the end of the message.
+ * It sends the message byte by byte, including multi-byte characters for 
+ * Unicode. After sending the message, it sends a final 8 bits (all 0s) to mark 
+ * the end of the message.
  */
-
 void	send_message_to_server(pid_t server_pid, const char *message)
 {
-	unsigned char	current_char;
-	int				bit_position;
 	size_t			i;
-	size_t			len;
+	int				bit_position;
+	unsigned char	current_byte;
 
-	len = ft_strlen(message) + 1;
 	i = 0;
-	while (i < len)
+	while (message[i] != '\0')
 	{
-		current_char = message[i];
+		current_byte = (unsigned char)message[i];
 		bit_position = 7;
 		while (bit_position >= 0)
 		{
-			send_bit_to_server(server_pid, (current_char >> bit_position) & 1);
+			send_bit_to_server(server_pid, (current_byte >> bit_position) & 1);
 			bit_position--;
 		}
 		i++;
+	}
+	bit_position = 7;
+	while (bit_position >= 0)
+	{
+		send_bit_to_server(server_pid, 0);
+		bit_position--;
 	}
 }
 
