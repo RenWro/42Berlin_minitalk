@@ -29,4 +29,36 @@ It is used to store values that identify processes in the operating system.
 
 - It is a signed integer type, usually represented as `int`, but the exact implementation may vary between operating systems.
 - It is used to identify processes in system calls such as `fork()`, `kill()`, `wait()`, and `getpid()`.
+  
+
+### 🌍 Global Variables and Their Use in Minitalk
+
+#### 🔹 What is a Global Variable?
+A **global variable** is a variable that is declared outside of all functions, making it accessible throughout the entire program. Unlike **local variables**, which are only available inside the function they are declared in, a global variable **retains its value across function calls** and can be modified by any part of the program.
+
+#### 🔹 How to Declare a Global Variable in C:
+```c
+#include <stdio.h>
+
+int g_counter = 0; // Global variable
+
+void increment_counter() {
+    g_counter++; // Modifying the global variable
+    printf("Counter: %d\n", g_counter);
+}
+
+int main() {
+    increment_counter();
+    increment_counter();
+    return 0;
+}
+```
+
+### 🛠 Why Use a Global Variable in Minitalk?
+
+In the **Minitalk client**, we use a **global variable `g_reply`** to track whether the **server has acknowledged a received bit**.
+
+- Since **signals (`SIGUSR1`, `SIGUSR2`) are handled asynchronously**, we need a way to **store the acknowledgment status** between function calls.
+- A **local variable inside `signal_reception()` would not work**, because it would be destroyed after the function ends.
+- The **global variable persists across function calls**, allowing us to track when the server sends `SIGUSR1` in response.
 
