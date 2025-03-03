@@ -5,6 +5,9 @@ CLIENT	= client
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
+LIBFT		= ./libft/libft.a
+LIBFTDIR 	= ./libft
+
 RM = rm -f
 
 SRC_SERVER = server.c
@@ -19,11 +22,11 @@ $(LIBFT):
 	@make -C $(LIBFTDIR)
 	@echo "✅ Libft compiled successfully."
 
-$(SERVER): $(OBJ_SERVER) $(LIBFT)
+$(SERVER): $(LIBFT) $(OBJ_SERVER)
 	$(CC) $(CFLAGS) $(OBJ_SERVER) -o $(SERVER) -L$(LIBFTDIR) -lft
 	@echo "🚀 Server compiled successfully."
 
-$(CLIENT): $(OBJ_CLIENT) $(LIBFT)
+$(CLIENT): $(LIBFT) $(OBJ_CLIENT)
 	$(CC) $(CFLAGS) $(OBJ_CLIENT) -o $(CLIENT) -L$(LIBFTDIR) -lft
 	@echo "🚀 Client compiled successfully."
 
