@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rwrobles <rwrobles@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: rwrobles <rwrobles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:53:24 by rwrobles          #+#    #+#             */
-/*   Updated: 2025/03/02 11:53:39 by rwrobles         ###   ########.fr       */
+/*   Updated: 2025/03/03 19:33:09 by rwrobles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "libft/libft.h"
 
 # define BUFFER 90000
@@ -33,4 +35,3 @@ typedef struct s_message
 }	t_message;
 
 #endif
-
