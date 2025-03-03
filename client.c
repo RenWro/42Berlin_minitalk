@@ -6,19 +6,20 @@
 /*   By: rwrobles <rwrobles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:11:47 by rwrobles          #+#    #+#             */
-/*   Updated: 2025/03/01 17:21:26 by rwrobles         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:36:04 by rwrobles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-/* 
+/*
  * Global variable to track server acknowledgment.
  */
-static int g_reply = 0;
+static int	g_reply = 0;
 
-/* 
- * Signal handler to update the global reply variable when a SIGUSR1 is received.
+/*
+
+	* Signal handler to update the global reply variable when a SIGUSR1 is received.
  */
 void	signal_reception(int signal)
 {
@@ -26,7 +27,7 @@ void	signal_reception(int signal)
 		g_reply = 1;
 }
 
-/* 
+/*
  * Function to send a single bit to the server via a signal.
  * It sends SIGUSR1 if the bit is 1 and SIGUSR2 if the bit is 0.
  * The function uses a small delay (usleep) and waits for confirmation
@@ -39,16 +40,16 @@ void	send_bit_to_server(pid_t server_pid, int bit_value)
 	else
 		kill(server_pid, SIGUSR2);
 	usleep(10000);
-	while (!g_reply)
+	while (!g_reply) //while g_reply equals 0 -> if it never becomes 1, we are stuck here forever
 		pause();
 	g_reply = 0;
 }
 
-/* 
+/*
  * Function to send the entire message to the server.
- * It sends the message byte by byte, including multi-byte characters for 
- * Unicode. After sending the message, it sends a final 8 bits (all 0s) to mark 
- * the end of the message.
+ * It sends the message byte by byte and bit by bit, including multi-byte
+ * characters forUnicode. After sending the message, it sends a final 8
+ * bits (all 0s) to mark the end of the message.
  */
 void	send_message_to_server(pid_t server_pid, const char *message)
 {
@@ -76,7 +77,7 @@ void	send_message_to_server(pid_t server_pid, const char *message)
 	}
 }
 
-/* 
+/*
  * Main function to execute the client.
  * It takes the server PID and the message to be sent as command-line arguments.
  * It then sends the message to the server.
@@ -88,7 +89,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_putendl_fd("Usage: <server PID> <message>", 1);
+		ft_putendl_fd("Usage: ./client server_PID \"message\"", 1);
 		return (1);
 	}
 	server_pid = ft_atoi(argv[1]);
