@@ -40,7 +40,7 @@ void	send_bit_to_server(pid_t server_pid, int bit_value)
 	else
 		kill(server_pid, SIGUSR2);
 	usleep(10000);
-	while (!g_reply) //while g_reply equals 0 -> if it never becomes 1, we are stuck here forever
+	while (!g_reply)
 		pause();
 	g_reply = 0;
 }
