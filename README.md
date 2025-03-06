@@ -29,6 +29,18 @@ It is used to store values that identify processes in the operating system.
 
 - It is a signed integer type, usually represented as `int`, but the exact implementation may vary between operating systems.
 - It is used to identify processes in system calls such as `fork()`, `kill()`, `wait()`, and `getpid()`.
+
+• The client takes two parameters:
+◦ The server PID.
+◦ The string to send.
+
+In Minitalk, the client sends bits to the server one by one.
+
+A signal is a way for a process to communicate asynchronously with another process or the kernel.
+Each signal has a unique integer identifier. In this case we could only use these two signals: SIGUSR1 and SIGUSR2.
+
+SIGUSR1 represents bit 1
+SIGUSR2 represents bit 0
   
 
 ### 🌍 Global Variables and Their Use in Minitalk
@@ -61,4 +73,49 @@ In the **Minitalk client**, we use a **global variable `g_reply`** to track whet
 - Since **signals (`SIGUSR1`, `SIGUSR2`) are handled asynchronously**, we need a way to **store the acknowledgment status** between function calls.
 - A **local variable inside `signal_reception()` would not work**, because it would be destroyed after the function ends.
 - The **global variable persists across function calls**, allowing us to track when the server sends `SIGUSR1` in response.
+
+### How is the server aknowledging each received message by sending a signal to the client?
+
+The info->si_pid is a field in the siginfo_t structure that contains the process ID (PID) of the sender of the signal. This is used in the handle_signal function to identify which process sent the signal and to send an acknowledgment signal back to that process.
+
+```c
+void	handle_signal(int signal, siginfo_t *info, void *context)
+{
+    static int	current_bit = 0;
+
+    (void)context;
+    if (signal == SIGUSR1)
+        g_message.current_char = (g_message.current_char << 1) | 1;
+    else if (signal == SIGUSR2)
+        g_message.current_char = (g_message.current_char << 1);
+    current_bit++;
+    if (current_bit == 8)
+    {
+        process_character();
+        current_bit = 0;
+    }
+    if (kill(info->si_pid, SIGUSR1) == -1) // send acknowledgment signal to the client
+        exit(EXIT_FAILURE);
+}
+```
+
+In this code, info->si_pid is used to get the PID of the client process that sent the signal. The kill function is then used to send a SIGUSR1 signal back to the client to acknowledge that the server has received and processed the bit.
+
+This acknowledgment mechanism ensures that the client knows when the server has successfully received each bit of the message, allowing the client to send the next bit.
+
+
+### How to start the server step-by-step?
+
+1. Compile the Project: make
+2. Start the Server: ./server
+3. Retrieve the PID: Server running with PID: 12345
+4. Open a New Terminal for the Client and start client: ./client 12345 "Hello, Minitalk! 😊"
+5. (Optional) Send Multiple Messages such as:
+./client 12345 "First message."
+./client 12345 "Second message."
+./client 12345 "Third message."
+6. To manually stop the server, press Ctrl + C or kill 12345
+
+
+
 
