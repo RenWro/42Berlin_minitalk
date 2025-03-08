@@ -1,6 +1,8 @@
 # 42Berlin_minitalk
 Minitalk is a project that aims to build a communication program in the form of a client and a server
 
+![image](https://github.com/user-attachments/assets/1fd102d2-6bbb-4668-af75-2f6b797d6726)
+
 ---
 <h2>Overview</h2>
 
