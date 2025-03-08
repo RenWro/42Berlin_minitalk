@@ -127,6 +127,7 @@ In this code, info->si_pid is used to get the PID of the client process that sen
 
 This acknowledgment mechanism ensures that the client knows when the server has successfully received each bit of the message, allowing the client to send the next bit.
 
+---
 
 ### How to start the server step-by-step?
 
