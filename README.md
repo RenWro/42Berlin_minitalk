@@ -17,6 +17,28 @@ The goal of the MiniTalk project is to create a **server** and a **client** that
 The **server** should be ready to receive messages from the client and print the received message.  
 Messages are sent asynchronously through **Unix signals** (`SIGUSR1` and `SIGUSR2`), which requires the client to send the message bit by bit (in binary) to the server.
 
+
+### Bonus
+Add reception acknowledgement system
+Support Unicode characters
+
+### Allowed Functions
+<ul dir="auto">
+<li><a href="https://man7.org/linux/man-pages/man3/free.3.html" rel="nofollow"><code>malloc</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/free.3.html" rel="nofollow"><code>free</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/write.2.html" rel="nofollow"><code>write</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/getpid.2.html" rel="nofollow"><code>getpid</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/signal.2.html" rel="nofollow"><code>signal</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/sigsetops.3.html" rel="nofollow"><code>sigemptyset &amp; sigaddset</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/sigaction.2.html" rel="nofollow"><code>sigaction</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/pause.2.html" rel="nofollow"><code>pause</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man2/kill.2.html" rel="nofollow"><code>kill</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/sleep.3.html" rel="nofollow"><code>sleep</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/usleep.3.html" rel="nofollow"><code>usleep</code></a></li>
+<li><a href="https://man7.org/linux/man-pages/man3/exit.3.html" rel="nofollow"><code>exit</code></a></li>
+</ul>
+
+
 ### Key Challenges
 - **Understanding Unix signals**: In MiniTalk, messages are sent and received through signals, and the client needs to send each bit of the message using `SIGUSR1` (for 0) and `SIGUSR2` (for 1).
   
